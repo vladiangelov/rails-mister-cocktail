@@ -1,0 +1,8 @@
+<h1>Create a new dose</h1>
+<%= simple_form_for [ @cocktail, @dose ] do |f| %>
+  <%= f.input :description %>
+  <%= f.association :ingredient %>
+  <%= f.submit %>
+<% end %>
+<br>
+<%= link_to "Back to cocktail", cocktail_path(@cocktail.id) %>
