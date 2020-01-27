@@ -1,19 +1,25 @@
 <h1><%= @cocktail.name %></h1>
 <%= link_to "Back to all cocktails", cocktails_path %>
 <ul>
-<div class="card" style="width: 18rem;">
+<div class="card" style="width: 300px">
   <img class="card-img-top" src=<%= @cocktail.picture %>>
   <div class="card-body">
     <h5 class="card-title"><%= @cocktail.name %></h5>
     <p class="card-text">An amazing combination of flavours, alcohol and sugar.</p>
   </div>
   <ul class="list-group list-group-flush">
+    <% @cocktail.reviews.each do |review| %>
+      <li class="list-group-item"> <%= review.content %> | <%= review.rating %></li>
+    <% end %>
+    <li class="list-group-item"><%= link_to "Add a review", new_cocktail_review_path(@cocktail.id) %></li>
+  </ul>
+  <ul class="list-group list-group-flush">
     <% @cocktail.doses.each do |dose| %>
       <li class="list-group-item"> <%= dose.description %> <%= link_to "DELETE", cocktail_dose_path(@cocktail.id, dose.id),
           method: :delete,
           data: { confirm: "Are you sure?" } %> </li>
     <% end %>
+    <li class="list-group-item"><%= link_to "Add a dose", new_cocktail_dose_path(@cocktail.id) %></li>
   </ul>
 </div>
-<%= link_to "Add a dose", new_cocktail_dose_path(@cocktail.id) %>
 
