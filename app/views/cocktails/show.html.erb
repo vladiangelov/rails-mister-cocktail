@@ -1,25 +1,31 @@
 <h1><%= @cocktail.name %></h1>
-<%= link_to "Back to all cocktails", cocktails_path %>
-<ul>
-<div class="card" style="width: 700px">
-  <%= cl_image_tag @cocktail.photo.key, height: 400, width: 600, crop: :fill %>
-  <div class="card-body">
-    <h5 class="card-title"><%= @cocktail.name %></h5>
-    <p class="card-text">An amazing combination of flavours, alcohol and sugar.</p>
+<div class="product-trip">
+  <%= cl_image_tag @cocktail.photo.key %>
+  <div class="product-trip-infos">
+    <div>
+      <h2>
+        <% @cocktail.doses.each do |dose| %>
+          <h2> <%= dose.description %> <%= link_to "x", cocktail_dose_path(@cocktail.id, dose.id),
+              method: :delete,
+              data: { confirm: "Are you sure?" } %> </h2>
+        <% end %>
+      </h2>
+    </div>
+    <h2 class="product-trip-pricing"><%= link_to "Add a dose", new_cocktail_dose_path(@cocktail.id) %>
+    </h2>
   </div>
-  <ul class="list-group list-group-flush">
-    <% @cocktail.reviews.each do |review| %>
-      <li class="list-group-item"> <%= review.content %> | <%= review.rating %></li>
-    <% end %>
-    <li class="list-group-item"><%= link_to "Add a review", new_cocktail_review_path(@cocktail.id) %></li>
-  </ul>
-  <ul class="list-group list-group-flush">
-    <% @cocktail.doses.each do |dose| %>
-      <li class="list-group-item"> <%= dose.description %> <%= link_to "DELETE", cocktail_dose_path(@cocktail.id, dose.id),
-          method: :delete,
-          data: { confirm: "Are you sure?" } %> </li>
-    <% end %>
-    <li class="list-group-item"><%= link_to "Add a dose", new_cocktail_dose_path(@cocktail.id) %></li>
-  </ul>
+  <div class="product-trip-infos">
+    <div>
+      <h2>
+        <% @cocktail.reviews.each do |review| %>
+        <p> <%= review.content %> | <%= review.rating %></p>
+        <% end %>
+      </h2>
+    </div>
+    <h2 class="product-trip-pricing"><%= link_to "Add a review", new_cocktail_review_path(@cocktail.id) %>
+    </h2>
+  </div>
 </div>
+<br>
+<p><%= link_to "Back to all cocktails", cocktails_path %></p>
 
